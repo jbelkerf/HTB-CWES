@@ -451,6 +451,28 @@ zoomeye
 
 
 # FILE UPLOAD ATTACKS
+## php extentios
+```.php
+.php3
+.php4
+.php5
+.php7
+.php8
+.phtml
+.pht
+.phar
+.pgif
+.inc
+.module
+.engine
+.php.png
+.php.jpg
+.php.txt
+.php_.wav
+.php;.jpg
+.php%00.jpg
+```
+
 ## Web Shells
 
 | **Web Shell**   | **Description**   |
