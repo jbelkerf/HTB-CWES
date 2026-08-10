@@ -594,6 +594,7 @@ done
 | --------------|-------------------|
 | `grep '[[:classname:]]' file.txt` | Find strings that contain a given class. Classes are: [[:graph:]], [[:lower:]], [[:print:]], [[:punct:]], [[:space:]], [[:upper:]], and [[:xdigit:]] |
 | `grep -x '.\{123\}'`              | Find strings with length of 123   |
+| `awk 'length($0) >= 10 && /[a-z]/ && /[A-Z]/ && /[0-9]/' /opt/useful/seclists/Passwords/Leaked-Databases/rockyou.txt > custom_wordlist.txt`| filter a wordlist using awk|
 
 ## Misc
 
