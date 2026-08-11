@@ -755,3 +755,100 @@ done
 |`grep <pattern>`| Filters specific pattern in files or redirected output |
 |`jq`| Transforms JSON input and streams of JSON entities |
 |`man <tool>`| Man provides you with the manpage of the specific tool |
+
+
+
+
+# Tmux Cheat Sheet (HTB Setup, Logging, Windows)
+
+Prefix key = `Ctrl+B` (default). Below, "prefix" means press `Ctrl+B`, release, then press the next key.
+
+## Setup (TPM + Plugins)
+
+```bash
+# Clone the plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# Create config
+touch ~/.tmux.conf
+```
+
+`.tmux.conf` contents:
+```tmux
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-logging'
+
+# Initialize TMUX plugin manager (keep at bottom)
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+Reload config (from a normal shell, outside or inside tmux):
+```bash
+tmux source-file ~/.tmux.conf
+```
+> Note: `source-file` and `run` are **tmux commands**, not shell commands. Either prefix them with `tmux ...` from your normal shell, or open tmux's command line first with `prefix + :` then type the command without `tmux` in front.
+
+Install plugins (inside a tmux session):
+```
+prefix + Shift+I
+```
+Manual fallback if the keybind doesn't register:
+```bash
+tmux run-shell ~/.tmux/plugins/tpm/bindings/install_plugins
+```
+
+Start a session:
+```bash
+tmux new -s setup
+```
+
+## Logging (tmux-logging plugin)
+
+| Action | Keys |
+|---|---|
+| Start/stop logging current pane | `prefix + Shift+P` |
+| Retroactively save entire scrollback | `prefix + Alt+Shift+P` |
+
+- The log file is only **written to disk once you stop logging** (or exit the session) — it'll show 0 bytes while active.
+- Default location: home directory, filename like `tmux-<session>-<window>-<pane>-<timestamp>.log`.
+- Manual fallback if keybinds don't work:
+  ```bash
+  tmux run-shell ~/.tmux/plugins/tmux-logging/scripts/toggle_logging.sh
+  ```
+
+To increase scrollback buffer (for retroactive logging), add to `.tmux.conf`:
+```tmux
+set -g history-limit 10000
+```
+
+## Windows ("tabs")
+
+| Action | Keys |
+|---|---|
+| New window | `prefix + C` |
+| Next window | `prefix + N` |
+| Previous window | `prefix + P` |
+| Jump to window # | `prefix + 0-9` |
+| List/pick window | `prefix + W` |
+| Rename current window | `prefix + ,` |
+| Close window | `prefix + &` (or type `exit`) |
+
+## Panes (splits within a window)
+
+| Action | Keys |
+|---|---|
+| Split vertically | `prefix + %` |
+| Split horizontally | `prefix + "` |
+| Switch pane | `prefix + arrow key` |
+| Close pane | `prefix + X` (or type `exit`) |
+
+## Misc
+
+| Action | Keys |
+|---|---|
+| Detach from session | `prefix + D` |
+| Reattach | `tmux attach -t setup` |
+| List sessions | `tmux ls` |
+| Open tmux command line | `prefix + :` |
